@@ -26,6 +26,8 @@ class _TipCalculatorScreenState extends State<TipCalculatorScreen> {
   double _tipPercent = 10;
   int _people = 4;
 
+  void _reset() { setState(() { _billController.text = '0'; _tipPercent = 10; _people = 1; }); }
+
   double get _bill => double.tryParse(_billController.text.trim()) ?? 0;
   double get _tip => _bill * _tipPercent / 100;
   double get _total => _bill + _tip;
@@ -41,7 +43,7 @@ class _TipCalculatorScreenState extends State<TipCalculatorScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: const Color(0xFFF0FDFA),
-        appBar: AppBar(title: const Text('Tip Calculator'), centerTitle: true),
+        appBar: AppBar(title: const Text('Tip Calculator'), centerTitle: true, actions: [IconButton(tooltip: 'Reset calculator', onPressed: _reset, icon: const Icon(Icons.restart_alt))]),
         body: Center(
           child: SingleChildScrollView(
             padding: const EdgeInsets.all(20),
@@ -58,6 +60,8 @@ class _TipCalculatorScreenState extends State<TipCalculatorScreen> {
                       onChanged: (_) => setState(() {}),
                     ),
                     const SizedBox(height: 24),
+                    Wrap(spacing: 8, children: [for (final percent in [10, 15, 18, 20]) ChoiceChip(label: Text('$percent%'), selected: _tipPercent == percent, onSelected: (_) => setState(() => _tipPercent = percent))]),
+                    const SizedBox(height: 12),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [const Text('Tip percentage'), Text('${_tipPercent.round()}%')]),
                     Slider(value: _tipPercent, min: 0, max: 30, divisions: 30, label: '${_tipPercent.round()}%', onChanged: (value) => setState(() => _tipPercent = value)),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
