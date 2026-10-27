@@ -60,7 +60,7 @@ class _TipCalculatorScreenState extends State<TipCalculatorScreen> {
                       onChanged: (_) => setState(() {}),
                     ),
                     const SizedBox(height: 24),
-                    Wrap(spacing: 8, children: [for (final percent in [10, 15, 18, 20]) ChoiceChip(label: Text('$percent%'), selected: _tipPercent == percent, onSelected: (_) => setState(() => _tipPercent = percent))]),
+                    Wrap(spacing: 8, children: [for (final percent in [10.0, 15.0, 18.0, 20.0]) ChoiceChip(label: Text('${percent.toInt()}%'), selected: _tipPercent == percent, onSelected: (_) => setState(() => _tipPercent = percent))]),
                     const SizedBox(height: 12),
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [const Text('Tip percentage'), Text('${_tipPercent.round()}%')]),
                     Slider(value: _tipPercent, min: 0, max: 30, divisions: 30, label: '${_tipPercent.round()}%', onChanged: (value) => setState(() => _tipPercent = value)),
